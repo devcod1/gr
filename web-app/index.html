@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste AI - Gestion Intelligente des Déchets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+            padding: var(--space-lg);
+        }
+
+        .landing-container {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-xl);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .role-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: 2px solid transparent;
+        }
+
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-green);
+        }
+
+        .role-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .role-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-desc {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-gray);
+            font-size: 0.875rem;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="landing-container">
+        <div class="logo">🗑️</div>
+        <h1>Waste AI</h1>
+        <p class="subtitle">Système de Gestion Intelligente des Déchets</p>
+
+        <div class="role-grid">
+            <div class="role-card" onclick="window.location.href='admin/login.html'">
+                <div class="role-icon">👨‍💼</div>
+                <div class="role-title">Administrateur</div>
+                <div class="role-desc">Tableau de bord, analytics, gestion complète</div>
+            </div>
+
+            <div class="role-card" onclick="window.location.href='mobile/citoyen-home.html'">
+                <div class="role-icon">👥</div>
+                <div class="role-title">Citoyen</div>
+                <div class="role-desc">Signaler des déchets, gagner des points</div>
+            </div>
+
+            <div class="role-card" onclick="window.location.href='mobile/agent-dashboard.html'">
+                <div class="role-icon">🚛</div>
+                <div class="role-title">Agent Communal</div>
+                <div class="role-desc">Collectes optimisées, itinéraires</div>
+            </div>
+
+            <div class="role-card" onclick="window.location.href='mobile/investisseur-marketplace.html'">
+                <div class="role-icon">💼</div>
+                <div class="role-title">Investisseur</div>
+                <div class="role-desc">Acheter déchets recyclables</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="mobile/register.html" class="btn btn-primary btn-lg">
+                Créer un compte
+            </a>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">🤖</span>
+                <span>Intelligence Artificielle</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🗺️</span>
+                <span>Géolocalisation</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🏆</span>
+                <span>Gamification</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📊</span>
+                <span>Analytics en temps réel</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

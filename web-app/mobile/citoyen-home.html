@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Citoyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+</head>
+
+<body>
+    <div class="mobile-app">
+        <div class="mobile-header">
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-gray);">Bonjour,</div>
+                <h1 class="header-title" id="user-name">Ahmed Benali</h1>
+            </div>
+            <button class="btn-icon btn-secondary">🔔</button>
+        </div>
+
+        <div class="mobile-content">
+            <!-- Points Display -->
+            <div class="points-display">
+                <div class="points-value" id="user-points">250</div>
+                <div class="points-label">Points Verts</div>
+                <div style="margin-top: 1rem;">
+                    <span class="badge badge-success">🏆 Rang #12</span>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="margin-bottom: 1.5rem;">
+                <h3 style="margin-bottom: 1rem;">Actions Rapides</h3>
+                <div class="grid grid-2 gap-md">
+                    <a href="citoyen-signal.html" class="mobile-card"
+                        style="text-decoration: none; text-align: center; padding: 1.5rem;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📸</div>
+                        <div style="font-weight: 600; color: var(--text-white);">Signaler</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">+20 points</div>
+                    </a>
+
+                    <a href="citoyen-points.html" class="mobile-card"
+                        style="text-decoration: none; text-align: center; padding: 1.5rem;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏆</div>
+                        <div style="font-weight: 600; color: var(--text-white);">Classement</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">Voir ma position</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div>
+                <h3 style="margin-bottom: 1rem;">Activité Récente</h3>
+
+                <div class="list-item">
+                    <div class="list-item-icon"
+                        style="background: rgba(34, 197, 94, 0.1); color: var(--primary-green);">✓</div>
+                    <div class="list-item-content">
+                        <div class="list-item-title">Signalement traité</div>
+                        <div class="list-item-subtitle">Dépôt sauvage rue Didouche</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color: var(--primary-green); font-weight: 600;">+20</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">2h</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="list-item-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--accent-blue);">
+                        📸</div>
+                    <div class="list-item-content">
+                        <div class="list-item-title">Nouveau signalement</div>
+                        <div class="list-item-subtitle">Déchets verts parc municipal</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="badge badge-warning">En attente</span>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="list-item-icon"
+                        style="background: rgba(139, 92, 246, 0.1); color: var(--accent-purple);">🎁</div>
+                    <div class="list-item-content">
+                        <div class="list-item-title">Badge débloqué</div>
+                        <div class="list-item-subtitle">Éco-Citoyen Bronze</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color: var(--accent-purple); font-weight: 600;">+50</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">1j</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Summary -->
+            <div class="mobile-card mt-lg">
+                <h3 style="margin-bottom: 1rem;">Mes Statistiques</h3>
+                <div class="grid grid-3 gap-md" style="text-align: center;">
+                    <div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-green);">12</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">Signalements</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-blue);">8</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">Traités</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple);">3</div>
+                        <div style="font-size: 0.75rem; color: var(--text-gray);">Badges</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="citoyen-home.html" class="nav-button active">
+                <div class="nav-button-icon">🏠</div>
+                <div class="nav-button-label">Accueil</div>
+            </a>
+            <a href="citoyen-signal.html" class="nav-button">
+                <div class="nav-button-icon">📸</div>
+                <div class="nav-button-label">Signaler</div>
+            </a>
+            <a href="citoyen-points.html" class="nav-button">
+                <div class="nav-button-icon">🏆</div>
+                <div class="nav-button-label">Points</div>
+            </a>
+            <a href="../admin/login.html" class="nav-button">
+                <div class="nav-button-icon">👤</div>
+                <div class="nav-button-label">Profil</div>
+            </a>
+        </nav>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        if (AppData.currentUser && AppData.currentUser.role === 'CITOYEN') {
+            document.getElementById('user-name').textContent = `${AppData.currentUser.prenom} ${AppData.currentUser.nom}`;
+            document.getElementById('user-points').textContent = AppData.currentUser.pointsVerts || 0;
+        }
+    </script>
+</body>
+
+</html>

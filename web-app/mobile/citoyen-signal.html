@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signaler - Citoyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+</head>
+
+<body>
+    <div class="mobile-app">
+        <div class="mobile-header">
+            <button class="btn-icon btn-secondary" onclick="window.history.back()">←</button>
+            <h1 class="header-title">Signaler un Déchet</h1>
+            <div></div>
+        </div>
+
+        <div class="mobile-content">
+            <form id="report-form">
+                <!-- Photo Upload -->
+                <div class="image-preview" id="image-preview">
+                    <div class="image-preview-placeholder">
+                        <div class="image-preview-placeholder-icon">📷</div>
+                        <div>Prendre une photo du déchet</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <input type="file" accept="image/*" capture="environment" id="photo-input" style="display: none;">
+                    <button type="button" class="camera-button"
+                        onclick="document.getElementById('photo-input').click()">
+                        📸
+                    </button>
+                </div>
+
+                <!-- Form Fields -->
+                <div class="mobile-card">
+                    <div class="form-group">
+                        <label class="form-label">Titre du signalement</label>
+                        <input type="text" class="form-input" id="titre" placeholder="Ex: Dépôt sauvage" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="description" placeholder="Décrivez ce que vous voyez..."
+                            required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Type de déchet</label>
+                        <select class="form-select" id="type" required>
+                            <option value="">Sélectionner...</option>
+                            <option value="Déchet ménager">Déchets ménagers</option>
+                            <option value="Déchets verts">Déchets verts</option>
+                            <option value="Déchets de construction">Déchets de construction</option>
+                            <option value="Objets hors service">Objets hors service</option>
+                            <option value="Déchets dangereux">Déchets dangereux</option>
+                            <option value="Autres">Autres</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Localisation</label>
+                        <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="getLocation()">
+                            <span>📍</span>
+                            Utiliser ma position
+                        </button>
+                        <div id="location-display" class="mt-sm" style="font-size: 0.875rem; color: var(--text-gray);">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Volume estimé (m³)</label>
+                        <input type="number" class="form-input" id="volume" step="0.1" min="0" value="1.0">
+                    </div>
+                </div>
+
+                <!-- AI Classification Result -->
+                <div class="mobile-card" id="ai-result" style="display: none;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="font-size: 2rem;">🤖</div>
+                        <div>
+                            <div style="font-weight: 600;">Classification IA</div>
+                            <div style="font-size: 0.875rem; color: var(--text-gray);">Détection automatique</div>
+                        </div>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(34, 197, 94, 0.1); border-radius: var(--radius-md);">
+                        <div style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.25rem;">Type détecté:
+                        </div>
+                        <div style="font-weight: 600; color: var(--primary-green);" id="ai-type">Plastique</div>
+                        <div style="font-size: 0.875rem; color: var(--text-gray); margin-top: 0.5rem;">Confiance: <span
+                                id="ai-confidence">95%</span></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                    <span>📤</span>
+                    Envoyer le signalement (+20 points)
+                </button>
+            </form>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="citoyen-home.html" class="nav-button">
+                <div class="nav-button-icon">🏠</div>
+                <div class="nav-button-label">Accueil</div>
+            </a>
+            <a href="citoyen-signal.html" class="nav-button active">
+                <div class="nav-button-icon">📸</div>
+                <div class="nav-button-label">Signaler</div>
+            </a>
+            <a href="citoyen-points.html" class="nav-button">
+                <div class="nav-button-icon">🏆</div>
+                <div class="nav-button-label">Points</div>
+            </a>
+            <a href="../admin/login.html" class="nav-button">
+                <div class="nav-button-icon">👤</div>
+                <div class="nav-button-label">Profil</div>
+            </a>
+        </nav>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        let currentLocation = null;
+
+        // Handle photo selection
+        document.getElementById('photo-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const preview = document.getElementById('image-preview');
+                    preview.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+
+                    // Simulate AI classification
+                    setTimeout(() => {
+                        document.getElementById('ai-result').style.display = 'block';
+                        document.getElementById('type').value = 'Déchet ménager';
+                    }, 1000);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Get current location
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    currentLocation = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    document.getElementById('location-display').innerHTML =
+                        `📍 Position détectée: ${currentLocation.latitude.toFixed(4)}, ${currentLocation.longitude.toFixed(4)}`;
+                }, () => {
+                    // Fallback to default location
+                    currentLocation = { latitude: 36.7525, longitude: 3.0420 };
+                    document.getElementById('location-display').innerHTML =
+                        `📍 Position: ${currentLocation.latitude.toFixed(4)}, ${currentLocation.longitude.toFixed(4)} (par défaut)`;
+                });
+            } else {
+                currentLocation = { latitude: 36.7525, longitude: 3.0420 };
+                document.getElementById('location-display').innerHTML =
+                    `📍 Position: ${currentLocation.latitude.toFixed(4)}, ${currentLocation.longitude.toFixed(4)} (par défaut)`;
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('report-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            Utils.showNotification('Signalement envoyé', 'Vous avez gagné 20 points!', 'success');
+
+            setTimeout(() => {
+                window.location.href = 'citoyen-home.html';
+            }, 1500);
+        });
+
+        // Auto-detect location on load
+        getLocation();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Utilisateurs - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">🗑️</div>
+                    <span>Waste AI</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Menu Principal</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a href="map.html" class="nav-item">
+                        <span class="nav-icon">🗺️</span>
+                        <span>Carte Interactive</span>
+                    </a>
+                    <a href="reports.html" class="nav-item">
+                        <span class="nav-icon">📋</span>
+                        <span>Gestion Signalements</span>
+                    </a>
+                    <a href="collections.html" class="nav-item">
+                        <span class="nav-icon">🚛</span>
+                        <span>Collectes & Itinéraires</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Administration</div>
+                    <a href="users.html" class="nav-item active">
+                        <span class="nav-icon">👥</span>
+                        <span>Gestion Utilisateurs</span>
+                    </a>
+                    <a href="analytics.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span>Analyses & Rapports</span>
+                    </a>
+                    <a href="settings.html" class="nav-item">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Paramètres</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar" id="user-avatar">A</div>
+                    <div class="user-info">
+                        <div class="user-name" id="user-name">Admin User</div>
+                        <div class="user-role" id="user-role">Administrateur</div>
+                    </div>
+                    <button class="btn-icon btn-secondary" id="logout-btn" title="Déconnexion">🚪</button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Gestion des Utilisateurs</h1>
+                    <p class="page-subtitle">Gérer les comptes et permissions</p>
+                </div>
+                <button class="btn btn-primary">
+                    <span>➕</span>
+                    Nouvel Utilisateur
+                </button>
+            </div>
+
+            <div class="grid grid-4 mb-lg">
+                <div class="stat-card">
+                    <div class="stat-label">Total Utilisateurs</div>
+                    <div class="stat-value" id="total-users">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Citoyens</div>
+                    <div class="stat-value" id="total-citoyens" style="color: var(--accent-blue)">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Agents</div>
+                    <div class="stat-value" id="total-agents" style="color: var(--primary-green)">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Investisseurs</div>
+                    <div class="stat-value" id="total-investisseurs" style="color: var(--accent-purple)">0</div>
+                </div>
+            </div>
+
+            <div class="filters mb-lg">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="search-users"
+                        placeholder="Rechercher un utilisateur...">
+                </div>
+
+                <div class="filter-group">
+                    <select class="form-select" id="filter-role">
+                        <option value="">Tous les rôles</option>
+                        <option value="CITOYEN">Citoyen</option>
+                        <option value="AGENT">Agent Communal</option>
+                        <option value="INVESTISSEUR">Investisseur</option>
+                        <option value="ADMIN">Administrateur</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="filter-verified">
+                        <span>Vérifiés uniquement</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Utilisateur</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Rôle</th>
+                            <th>Statut</th>
+                            <th>Points</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        if (!Utils.requireAuth('ADMIN')) {
+            window.location.href = 'login.html';
+        }
+
+        function loadUsers() {
+            const search = document.getElementById('search-users').value.toLowerCase();
+            const roleFilter = document.getElementById('filter-role').value;
+            const verifiedOnly = document.getElementById('filter-verified').checked;
+
+            let users = AppData.users.filter(user => {
+                if (search && !`${user.nom} ${user.prenom} ${user.email}`.toLowerCase().includes(search)) {
+                    return false;
+                }
+                if (roleFilter && user.role !== roleFilter) {
+                    return false;
+                }
+                if (verifiedOnly && !user.isVerified) {
+                    return false;
+                }
+                return true;
+            });
+
+            // Update stats
+            document.getElementById('total-users').textContent = AppData.users.length;
+            document.getElementById('total-citoyens').textContent =
+                AppData.users.filter(u => u.role === 'CITOYEN').length;
+            document.getElementById('total-agents').textContent =
+                AppData.users.filter(u => u.role === 'AGENT').length;
+            document.getElementById('total-investisseurs').textContent =
+                AppData.users.filter(u => u.role === 'INVESTISSEUR').length;
+
+            // Populate table
+            const tbody = document.getElementById('users-table');
+            tbody.innerHTML = '';
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                const roleColors = {
+                    'CITOYEN': 'var(--accent-blue)',
+                    'AGENT': 'var(--primary-green)',
+                    'INVESTISSEUR': 'var(--accent-purple)',
+                    'ADMIN': 'var(--danger-red)'
+                };
+
+                row.innerHTML = `
+          <td>
+            <div class="flex items-center gap-md">
+              <div class="user-avatar" style="width: 40px; height: 40px; font-size: 1rem;">
+                ${user.prenom.charAt(0)}
+              </div>
+              <div>
+                <div style="font-weight: 600;">${user.prenom} ${user.nom}</div>
+                <div style="font-size: 0.75rem; color: var(--text-gray);">
+                  ${user.role === 'AGENT' ? `Agent ${user.matricule || ''}` : user.role === 'INVESTISSEUR' ? user.entreprise : ''}
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>${user.email}</td>
+          <td>${user.telephone}</td>
+          <td><span style="color: ${roleColors[user.role]}">${user.role}</span></td>
+          <td>
+            ${user.isVerified
+                        ? '<span class="badge badge-success">✓ Vérifié</span>'
+                        : '<span class="badge badge-warning">En attente</span>'}
+          </td>
+          <td>${user.pointsVerts || '-'}</td>
+          <td>
+            <button class="btn btn-sm btn-secondary" onclick="editUser(${user.id})">Modifier</button>
+          </td>
+        `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function editUser(id) {
+            Utils.showNotification('Modification', `Édition utilisateur #${id}`, 'info');
+        }
+
+        document.getElementById('search-users').addEventListener('input', loadUsers);
+        document.getElementById('filter-role').addEventListener('change', loadUsers);
+        document.getElementById('filter-verified').addEventListener('change', loadUsers);
+
+        loadUsers();
+    </script>
+</body>
+
+</html>

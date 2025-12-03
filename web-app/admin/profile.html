@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil - Administration</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <!-- Sidebar (reuse from other admin pages) -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="dashboard.html">Tableau de bord</a></li>
+                <li><a href="reports.html">Rapports</a></li>
+                <li><a href="users.html">Utilisateurs</a></li>
+                <li><a href="collections.html">Collections</a></li>
+                <li><a href="settings.html">Paramètres</a></li>
+                <li><a href="profile.html" class="active">Profil</a></li>
+                <li><a href="login.html" id="logout-btn">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Modifier le profil</h1>
+        </header>
+        <section class="profile-section">
+            <form id="profile-form" class="form-group">
+                <label class="form-label" for="prenom">Prénom</label>
+                <input class="form-input" type="text" id="prenom" name="prenom" required />
+
+                <label class="form-label" for="nom">Nom</label>
+                <input class="form-input" type="text" id="nom" name="nom" required />
+
+                <label class="form-label" for="email">Email</label>
+                <input class="form-input" type="email" id="email" name="email" required />
+
+                <label class="form-label" for="telephone">Téléphone</label>
+                <input class="form-input" type="tel" id="telephone" name="telephone" required />
+
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script>
+        // Populate form with current user data
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = AppData.currentUser;
+            if (!user) {
+                Utils.navigate('login.html');
+                return;
+            }
+            document.getElementById('prenom').value = user.prenom || '';
+            document.getElementById('nom').value = user.nom || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('telephone').value = user.telephone || '';
+
+            const form = document.getElementById('profile-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const updated = {
+                    prenom: form.prenom.value.trim(),
+                    nom: form.nom.value.trim(),
+                    email: form.email.value.trim(),
+                    telephone: form.telephone.value.trim()
+                };
+                AppData.updateCurrentUser(updated);
+                Utils.showNotification('Profil mis à jour', 'Vos informations ont été enregistrées.', 'success');
+                // Optionally refresh display
+                Utils.updateUserDisplay();
+            });
+        });
+    </script>
+</body>
+
+</html>
