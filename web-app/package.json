@@ -1,0 +1,23 @@
+{
+  "name": "waste-ai",
+  "version": "1.0.0",
+  "description": "Intelligent Waste Management System for Algeria",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "dev": "npx http-server -p 8000 -o",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:vercel": "vercel --prod"
+  },
+  "keywords": [
+    "waste-management",
+    "ai",
+    "recycling",
+    "algeria",
+    "sustainability"
+  ],
+  "author": "Waste AI Team",
+  "license": "UNLICENSED",
+  "devDependencies": {},
+  "dependencies": {}
+}
